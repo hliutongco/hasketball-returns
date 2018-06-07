@@ -5,30 +5,38 @@ import TeamList from './components/TeamList'
 import PlayerDetails from './components/PlayerDetails'
 import NavHeader from './components/Header'
 import 'semantic-ui-css/semantic.min.css';
-
+import { connect } from 'react-redux'
 
 class App extends Component {
-  state = {
-    teams: gamesData.teams,
-    selectedPlayer: null
-  }
-
-  handleSelectPlayer = (player) => {
-    this.setState({
-      selectedPlayer: player
-    })
-  }
+  // state = {
+  //   teams: gamesData.teams,
+  //   selectedPlayer: null
+  // }
+  //
+  // handleSelectPlayer = (player) => {
+  //   this.setState({
+  //     selectedPlayer: player
+  //   })
+  // }
 
   render() {
     return (
       <div className="App">
         <NavHeader />
-        <TeamList teams={this.state.teams} selectPlayer={this.handleSelectPlayer}/>
-        {!this.state.selectedPlayer ? <div> Click Player for Details </div> :
-          <PlayerDetails selectedPlayer={this.state.selectedPlayer}/>}
+        <TeamList />
+        {!this.props.selectedPlayer ? <div> Click Player for Details </div> :
+          <PlayerDetails selectedPlayer={this.props.selectedPlayer}/>}
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return {
+    teams: state.teams,
+    selectedPlayer: state.selectedPlayer
+  }
+}
+
+
+export default connect(mapStateToProps)(App);
